@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>宝宝的温馨互动</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <style>
     body {
       background: linear-gradient(135deg, #fbeee6 0%, #ffe5ec 50%, #c3f8ff 100%);
@@ -16,11 +17,12 @@
       flex-direction: column;
       justify-content: center;
       position: relative;
+      box-sizing: border-box;
     }
     h1 {
-      font-size: 2.5em;
-      margin-top: 50px;
-      margin-bottom: 30px;
+      font-size: 2em;
+      margin-top: 28px;
+      margin-bottom: 24px;
       letter-spacing: 2px;
       color: #ff7eb3;
       text-shadow: 0 4px 16px #ffd6e0;
@@ -30,13 +32,35 @@
       from { opacity: 0; transform: translateY(-40px);}
       to { opacity: 1; transform: translateY(0);}
     }
+    .top-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      margin-top: 6px;
+    }
+    .top-icon svg {
+      width: 36px;
+      height: 36px;
+      margin: 0 5px;
+      vertical-align: middle;
+    }
+    .top-icon-text {
+      font-size: 1em;
+      color: #ffa3c5;
+      margin-left: 8px;
+      letter-spacing: 1px;
+      font-weight: 500;
+      opacity: 0.84;
+    }
     .question {
-      font-size: 1.5em;
-      margin-bottom: 28px;
-      margin-top: 30px;
-      min-height: 50px;
+      font-size: 1.1em;
+      margin-bottom: 18px;
+      margin-top: 18px;
+      min-height: 36px;
       color: #d72660;
       animation: fadeIn .7s;
+      padding: 0 10px;
     }
     @keyframes fadeIn {
       from { opacity: 0;}
@@ -46,16 +70,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 22px;
-      margin-bottom: 40px;
+      gap: 16px;
+      margin-bottom: 30px;
+      padding: 0 18px;
     }
     .option-btn {
       background: linear-gradient(90deg, #ffb6b9 0%, #fae3d9 100%);
       color: #fff;
       border: none;
-      padding: 16px 38px;
+      padding: 12px 0;
       border-radius: 30px;
-      font-size: 1.18em;
+      font-size: 1em;
       cursor: pointer;
       box-shadow: 0 2px 12px rgba(255,182,185,0.18);
       transition: background .22s, transform .15s;
@@ -63,72 +88,52 @@
       letter-spacing: 1px;
       outline: none;
       position: relative;
+      width: 90vw;
+      max-width: 320px;
     }
     .option-btn:active {
       animation: btnBounce .32s;
     }
     @keyframes btnBounce {
       0%   { transform: scale(1); }
-      30%  { transform: scale(1.15) rotate(-6deg);}
-      60%  { transform: scale(0.92) rotate(6deg);}
+      30%  { transform: scale(1.12) rotate(-6deg);}
+      60%  { transform: scale(0.94) rotate(6deg);}
       100% { transform: scale(1); }
     }
     .result {
-      font-size: 1.4em;
+      font-size: 1.12em;
       color: #ff7eb3;
-      margin-top: 32px;
-      min-height: 40px;
+      margin-top: 20px;
+      min-height: 32px;
       transition: opacity .5s;
       opacity: 1;
       animation: floatUp .9s;
+      padding: 0 12px;
     }
     @keyframes floatUp {
-      from { opacity: 0; transform: translateY(36px);}
+      from { opacity: 0; transform: translateY(28px);}
       to { opacity: 1; transform: translateY(0);}
     }
     .my-id {
       position: fixed;
-      right: 18px;
-      bottom: 18px;
-      font-size: 1.05em;
+      right: 10px;
+      bottom: 10px;
+      font-size: 0.95em;
       color: #fff;
       background: linear-gradient(90deg, #ffb6b9 0%, #fae3d9 100%);
-      padding: 9px 24px;
-      border-radius: 20px;
+      padding: 7px 16px;
+      border-radius: 16px;
       box-shadow: 0 2px 8px rgba(255,182,185,0.20);
-      opacity: .88;
+      opacity: .82;
       z-index: 9999;
       letter-spacing: 2px;
       font-weight: bold;
-    }
-    /* 新的顶部icon样式 */
-    .top-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-      margin-top: 8px;
-    }
-    .top-icon svg {
-      width: 42px;
-      height: 42px;
-      margin: 0 6px;
-      vertical-align: middle;
-    }
-    .top-icon-text {
-      font-size: 1.18em;
-      color: #ffa3c5;
-      margin-left: 10px;
-      letter-spacing: 1.5px;
-      font-weight: 500;
-      opacity: 0.84;
     }
   </style>
 </head>
 <body>
   <h1>宝宝的小互动</h1>
   <div class="top-icon">
-    <!-- 柔美渐变icon，SVG心与星星组合 -->
     <svg viewBox="0 0 48 48" fill="none">
       <defs>
         <linearGradient id="grad1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
@@ -213,7 +218,7 @@
             } else {
               showEnd();
             }
-          }, 1400); // 1.4秒后自动进入下一步
+          }, 1400);
         };
         optionsDiv.appendChild(btn);
       });
