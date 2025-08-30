@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>宝宝的温馨互动</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #fbeee6 0%, #ffe5ec 50%, #c3f8ff 100%);
+      font-family: "微软雅黑", Arial, sans-serif;
+      color: #d72660;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-top: 50px;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+      color: #ff7eb3;
+      text-shadow: 0 4px 16px #ffd6e0;
+      animation: fadeInDown 1s;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .question {
+      font-size: 1.5em;
+      margin-bottom: 28px;
+      margin-top: 30px;
+      min-height: 50px;
+      color: #d72660;
+      animation: fadeIn .7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0;}
+      to { opacity: 1;}
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      margin-bottom: 40px;
+    }
+    .option-btn {
+      background: linear-gradient(90deg, #ffb6b9 0%, #fae3d9 100%);
+      color: #fff;
+      border: none;
+      padding: 16px 38px;
+      border-radius: 30px;
+      font-size: 1.18em;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(255,182,185,0.18);
+      transition: background .22s, transform .15s;
+      font-weight: bold;
+      letter-spacing: 1px;
+      outline: none;
+      position: relative;
+    }
+    .option-btn:active {
+      animation: btnBounce .32s;
+    }
+    @keyframes btnBounce {
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.15) rotate(-6deg);}
+      60%  { transform: scale(0.92) rotate(6deg);}
+      100% { transform: scale(1); }
+    }
+    .result {
+      font-size: 1.4em;
+      color: #ff7eb3;
+      margin-top: 32px;
+      min-height: 40px;
+      transition: opacity .5s;
+      opacity: 1;
+      animation: floatUp .9s;
+    }
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(36px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .my-id {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      font-size: 1.05em;
+      color: #fff;
+      background: linear-gradient(90deg, #ffb6b9 0%, #fae3d9 100%);
+      padding: 9px 24px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(255,182,185,0.20);
+      opacity: .88;
+      z-index: 9999;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+    /* 新的顶部icon样式 */
+    .top-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      margin-top: 8px;
+    }
+    .top-icon svg {
+      width: 42px;
+      height: 42px;
+      margin: 0 6px;
+      vertical-align: middle;
+    }
+    .top-icon-text {
+      font-size: 1.18em;
+      color: #ffa3c5;
+      margin-left: 10px;
+      letter-spacing: 1.5px;
+      font-weight: 500;
+      opacity: 0.84;
+    }
+  </style>
+</head>
+<body>
+  <h1>宝宝的小互动</h1>
+  <div class="top-icon">
+    <!-- 柔美渐变icon，SVG心与星星组合 -->
+    <svg viewBox="0 0 48 48" fill="none">
+      <defs>
+        <linearGradient id="grad1" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#FFB6B9"/>
+          <stop offset="1" stop-color="#FF7EB3"/>
+        </linearGradient>
+      </defs>
+      <path d="M24 39s-12.5-8.5-12.5-17a7.5 7.5 0 0 1 15 0A7.5 7.5 0 0 1 36.5 22c0 8.5-12.5 17-12.5 17z" fill="url(#grad1)"/>
+      <circle cx="38" cy="8" r="4" fill="#ffe5ec" stroke="#FFB6B9" stroke-width="2"/>
+      <polygon points="10,7 12,12 7,12 13,15 10,7" fill="#ffe5ec" stroke="#FFB6B9" stroke-width="0.7"/>
+    </svg>
+    <span class="top-icon-text">温柔陪伴的小星心</span>
+  </div>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <div class="result" id="result"></div>
+  <div class="my-id">橘子</div>
+  <script>
+    const steps = [
+      {
+        question: "宝宝，今天睡得好吗？",
+        options: ["睡得很好", "有点失眠", "做了个梦", "还没睡醒呢"],
+        replies: [
+          "宝宝休息好我就放心啦，记得多喝水哦！🌙",
+          "没关系，白天要注意调节心情，橘子陪着你！🍊",
+          "是什么有趣的梦呢？说给我听听！✨",
+          "那宝宝可以再眯一会儿，养养精神！😴"
+        ]
+      },
+      {
+        question: "宝宝，你在干嘛呀？",
+        options: ["刷视频", "看剧", "吃饭", "想你"],
+        replies: [
+          "别看时间太久啦，宝宝要注意休息哦！🌈",
+          "剧好看吗？给宝宝推荐一下吧～📺",
+          "吃什么呀？有没有宝宝最爱的？🍚",
+          "哎呀，宝宝也在想你呢！💕"
+        ]
+      },
+      {
+        question: "宝宝，今天过得开心吗？",
+        options: ["超级开心", "一般般", "有点累", "不太开心"],
+        replies: [
+          "宝宝开心我就放心啦！要一直幸福哦！🧸",
+          "希望宝宝接下来会更好～💐",
+          "辛苦的宝宝，抱抱你！🤗",
+          "不开心的时候记得还有我陪你！"
+        ]
+      },
+      {
+        question: "宝宝，下周要不要一起吃饭呀？",
+        options: ["好呀", "不想动", "你请客吗", "等下再说"],
+        replies: [
+          "太棒啦，宝宝想吃什么都可以！🍱",
+          "没关系，宝宝想休息就休息，等有空再一起！🛋️",
+          "当然请宝宝啦！🥰",
+          "随时等宝宝，想吃就叫我～🍜"
+        ]
+      }
+    ];
+
+    let step = 0;
+
+    function showStep() {
+      document.getElementById('result').textContent = "";
+      const q = steps[step];
+      document.getElementById('question').textContent = q.question;
+      const optionsDiv = document.getElementById('options');
+      optionsDiv.innerHTML = "";
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = opt;
+        btn.onclick = () => {
+          showReply(q.replies[idx]);
+          btn.style.animation = 'btnBounce .32s';
+          setTimeout(() => { btn.style.animation = ''; }, 320);
+          setTimeout(() => {
+            step++;
+            if (step < steps.length) {
+              showStep();
+            } else {
+              showEnd();
+            }
+          }, 1400); // 1.4秒后自动进入下一步
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function showReply(txt) {
+      const resultEl = document.getElementById('result');
+      resultEl.textContent = "";
+      resultEl.style.opacity = 0;
+      setTimeout(() => {
+        resultEl.textContent = txt;
+        resultEl.style.opacity = 1;
+        resultEl.style.animation = 'floatUp .9s';
+        setTimeout(() => { resultEl.style.animation = ''; }, 900);
+      }, 200);
+    }
+
+    function showEnd() {
+      document.getElementById('question').textContent = "宝宝，互动结束啦，偷偷做的小互动希望你喜欢！";
+      document.getElementById('options').innerHTML = "";
+      showReply("我会一直陪着宝宝！");
+    }
+
+    showStep();
+  </script>
+</body>
+</html>
